@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Webs para negocios — Demos publicadas</title>
+  <meta name="description" content="Seis webs de demo para negocios de Punto Fijo, listas para recibir pedidos y reservas por WhatsApp. Cada una con su demo en vivo y su código." />
+  <meta property="og:title" content="Webs para negocios — Demos publicadas" />
+  <meta property="og:description" content="Seis webs de demo listas para recibir pedidos y reservas por WhatsApp. Recórrelas." />
+  <meta property="og:image" content="assets/delivery.jpg" />
+  <meta property="og:type" content="website" />
+  <style>
+    :root {
+      --bg: #0b0d10;
+      --panel: #14171c;
+      --line: #262b33;
+      --text: #eef1f5;
+      --muted: #9aa4b2;
+      --accent: #42ffa1;
+      --radius: 18px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; }
+
+    .barra {
+      position: sticky; top: 0; z-index: 10;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px clamp(18px, 4vw, 48px);
+      background: rgba(11, 13, 16, .82);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+    .barra .marca { font-weight: 800; letter-spacing: -.02em; font-size: 15px; }
+    .barra .marca span { color: var(--accent); }
+    .barra nav { display: flex; gap: 18px; font-size: 14px; color: var(--muted); }
+    .barra nav a { text-decoration: none; transition: color .2s; }
+    .barra nav a:hover { color: var(--text); }
+
+    header.hero {
+      padding: clamp(56px, 10vw, 110px) clamp(18px, 4vw, 48px) clamp(40px, 6vw, 72px);
+      max-width: 1180px; margin: 0 auto;
+    }
+    .ojo {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 12px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid rgba(66, 255, 161, .35);
+      border-radius: 999px; padding: 6px 14px;
+    }
+    .ojo::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+    h1 {
+      margin-top: 22px;
+      font-size: clamp(38px, 6.5vw, 72px);
+      line-height: 1.04; letter-spacing: -.035em; font-weight: 850;
+      max-width: 15ch;
+    }
+    h1 em { font-style: normal; color: var(--accent); }
+    header.hero p {
+      margin-top: 18px; max-width: 56ch;
+      color: var(--muted); font-size: clamp(16px, 2vw, 19px);
+    }
+    .acciones { margin-top: 30px; display: flex; flex-wrap: wrap; gap: 14px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 13px 22px; border-radius: 12px;
+      font-weight: 700; font-size: 15px; text-decoration: none;
+      transition: transform .2s, box-shadow .2s, background .2s, border-color .2s;
+    }
+    .btn-primario { background: var(--accent); color: #06120c; }
+    .btn-primario:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(66, 255, 161, .25); }
+    .btn-fantasma { border: 1px solid var(--line); color: var(--text); }
+    .btn-fantasma:hover { border-color: var(--accent); transform: translateY(-2px); }
+
+    .rejilla {
+      max-width: 1180px; margin: 0 auto;
+      padding: 0 clamp(18px, 4vw, 48px) clamp(60px, 9vw, 110px);
+      display: grid; gap: 26px;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+    .ficha {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: flex; flex-direction: column;
+      opacity: 0; transform: translateY(26px);
+      transition: opacity .7s cubic-bezier(.2, .6, .2, 1), transform .7s cubic-bezier(.2, .6, .2, 1), border-color .3s;
+    }
+    .ficha.visible { opacity: 1; transform: none; }
+    .ficha:hover { border-color: rgba(66, 255, 161, .45); }
+    .ficha .visor { position: relative; aspect-ratio: 16 / 9; overflow: hidden; }
+    .ficha .visor img {
+      width: 100%; height: 100%; object-fit: cover; object-position: top center;
+      transition: transform .6s cubic-bezier(.2, .6, .2, 1);
+    }
+    .ficha:hover .visor img { transform: scale(1.05); }
+    .ficha .rubro {
+      position: absolute; left: 14px; top: 14px;
+      font-size: 11px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase;
+      background: rgba(11, 13, 16, .78); backdrop-filter: blur(6px);
+      border: 1px solid rgba(255, 255, 255, .14);
+      padding: 5px 11px; border-radius: 999px;
+    }
+    .ficha .cuerpo { padding: 20px 22px 24px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+    .ficha h2 { font-size: 21px; letter-spacing: -.02em; }
+    .ficha p { color: var(--muted); font-size: 14.5px; flex: 1; }
+    .ficha .links { display: flex; gap: 10px; margin-top: 6px; }
+    .ficha .links a {
+      flex: 1; text-align: center; text-decoration: none;
+      font-size: 14px; font-weight: 700; padding: 10px 12px; border-radius: 10px;
+      transition: transform .2s, background .2s, border-color .2s;
+    }
+    .links .ver { background: var(--accent); color: #06120c; }
+    .links .ver:hover { transform: translateY(-2px); }
+    .links .codigo { border: 1px solid var(--line); color: var(--text); }
+    .links .codigo:hover { border-color: var(--accent); transform: translateY(-2px); }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 34px clamp(18px, 4vw, 48px) 46px;
+      text-align: center; color: var(--muted); font-size: 14px;
+    }
+    footer a { color: var(--accent); text-decoration: none; font-weight: 700; }
+    footer a:hover { text-decoration: underline; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .ficha { opacity: 1; transform: none; transition: none; }
+      .ficha .visor img, .btn { transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="barra">
+    <div class="marca">Webs para <span>negocios</span></div>
+    <nav aria-label="Enlaces del sitio">
+      <a href="https://avilacarlosdev.com" rel="noopener">Portafolio</a>
+      <a href="https://github.com/AvilaCarlosDev" rel="noopener">GitHub</a>
+    </nav>
+  </div>
+
+  <header class="hero">
+    <span class="ojo">6 demos publicadas</span>
+    <h1>Tu negocio, con una web que <em>trabaja</em> por WhatsApp.</h1>
+    <p>Seis demos reales, cada una con su propia identidad: pedidos, reservas, cotizaciones y viajes salen directo al chat. Recórrelas y elige la que se parezca a tu negocio.</p>
+    <div class="acciones">
+      <a class="btn btn-primario" href="https://agencia-web-delivery-demo.vercel.app" rel="noopener">Ver una demo →</a>
+      <a class="btn btn-fantasma" href="https://avilacarlosdev.com#contacto" rel="noopener">Pedir la mía</a>
+    </div>
+  </header>
+
+  <main class="rejilla" id="demos">
+    <article class="ficha">
+      <div class="visor"><span class="rubro">Delivery</span><img src="assets/delivery.jpg" alt="CraveNow: portada con buscador de restaurantes, pedido activo y cupón" width="1280" height="720" /></div>
+      <div class="cuerpo">
+        <h2>CraveNow</h2>
+        <p>Marketplace de delivery: restaurantes, combos, seguimiento de pedido y pedidos por WhatsApp.</p>
+        <div class="links">
+          <a class="ver" href="https://agencia-web-delivery-demo.vercel.app" rel="noopener">Ver demo ↗</a>
+          <a class="codigo" href="https://github.com/AvilaCarlosDev/web-delivery-demo" rel="noopener">Código</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="ficha">
+      <div class="visor"><span class="rubro">Barbería</span><img src="assets/barberia.jpg" alt="Noble Barber: portada con letrero de barbero, servicios y reserva de cita" width="1280" height="720" /></div>
+      <div class="cuerpo">
+        <h2>Noble Barber</h2>
+        <p>Barbería clásica: servicios con precios, talón de la casa y reserva de cita por WhatsApp.</p>
+        <div class="links">
+          <a class="ver" href="https://agencia-web-barberia-demo.vercel.app" rel="noopener">Ver demo ↗</a>
+          <a class="codigo" href="https://github.com/AvilaCarlosDev/web-barberia-demo" rel="noopener">Código</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="ficha">
+      <div class="visor"><span class="rubro">Taxi</span><img src="assets/taxi.jpg" alt="RutaFija: portada con taxímetro y cotizador de tarifa" width="1280" height="720" /></div>
+      <div class="cuerpo">
+        <h2>RutaFija</h2>
+        <p>Servicio de taxi con cotizador de tarifa al instante y viaje solicitado por WhatsApp.</p>
+        <div class="links">
+          <a class="ver" href="https://agencia-web-taxi-demo.vercel.app" rel="noopener">Ver demo ↗</a>
+          <a class="codigo" href="https://github.com/AvilaCarlosDev/web-taxi-demo" rel="noopener">Código</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="ficha">
+      <div class="visor"><span class="rubro">Floristería</span><img src="assets/floristeria.jpg" alt="Siena Flower: portada editorial con titular y ramo destacado" width="1280" height="720" /></div>
+      <div class="cuerpo">
+        <h2>Siena Flower</h2>
+        <p>Floristería con catálogo editorial, pedido a medida y mensaje listo para WhatsApp.</p>
+        <div class="links">
+          <a class="ver" href="https://agencia-web-floristeria-demo.vercel.app" rel="noopener">Ver demo ↗</a>
+          <a class="codigo" href="https://github.com/AvilaCarlosDev/web-floristeria-demo" rel="noopener">Código</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="ficha">
+      <div class="visor"><span class="rubro">Ferretería</span><img src="assets/ferreteria.jpg" alt="ObraMax: portada industrial con titular estarcido y cifras" width="1280" height="720" /></div>
+      <div class="cuerpo">
+        <h2>ObraMax</h2>
+        <p>Ferretería industrial: catálogo con stock y cotización por cantidades enviada a obra por WhatsApp.</p>
+        <div class="links">
+          <a class="ver" href="https://agencia-web-ferreteria-demo.vercel.app" rel="noopener">Ver demo ↗</a>
+          <a class="codigo" href="https://github.com/AvilaCarlosDev/web-ferreteria-demo" rel="noopener">Código</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="ficha">
+      <div class="visor"><span class="rubro">Deportes</span><img src="assets/deportes.jpg" alt="SportZone: portada con buscador, titular bicolor y cifras de catálogo" width="1280" height="720" /></div>
+      <div class="cuerpo">
+        <h2>SportZone</h2>
+        <p>Tienda de deportes con asesoría de talla por WhatsApp y compra sin fricción.</p>
+        <div class="links">
+          <a class="ver" href="https://agencia-web-deportes-demo.vercel.app" rel="noopener">Ver demo ↗</a>
+          <a class="codigo" href="https://github.com/AvilaCarlosDev/web-deportes-demo" rel="noopener">Código</a>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <footer>
+    <p>Hecho por <a href="https://github.com/AvilaCarlosDev" rel="noopener">Carlos Avila</a> en Punto Fijo, Venezuela · <a href="https://avilacarlosdev.com#contacto" rel="noopener">Contacto</a></p>
+  </footer>
+
+  <script>
+    (function () {
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var fichas = document.querySelectorAll('.ficha');
+      if (reduce || !('IntersectionObserver' in window)) {
+        fichas.forEach(function (f) { f.classList.add('visible'); });
+        return;
+      }
+      var io = new IntersectionObserver(function (entradas) {
+        entradas.forEach(function (e, i) {
+          if (e.isIntersecting) {
+            var idx = Array.prototype.indexOf.call(fichas, e.target);
+            e.target.style.transitionDelay = (idx % 3) * 90 + 'ms';
+            e.target.classList.add('visible');
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      fichas.forEach(function (f) { io.observe(f); });
+    })();
+  </script>
+</body>
+</html>
